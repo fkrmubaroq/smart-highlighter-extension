@@ -1,0 +1,1 @@
+export const GET_CURRENT_TAB_ID = "GET_CURRENT_TAB_ID";

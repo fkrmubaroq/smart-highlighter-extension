@@ -19,7 +19,7 @@ const SheetOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Overlay
     className={cn(
-      "tw-fixed tw-inset-0 tw-z-[9999999] tw-bg-black/80 tw-data-[state=open]:tw-animate-in data-[state=closed]:tw-animate-out data-[state=closed]:tw-fade-out-0 data-[state=open]:tw-fade-in-0",
+      "twe-fixed twe-inset-0 twe-z-[9999999] twe-bg-black/80 twe-data-[state=open]:twe-animate-in data-[state=closed]:twe-animate-out data-[state=closed]:twe-fade-out-0 data-[state=open]:twe-fade-in-0",
       className
     )}
     {...props}
@@ -29,16 +29,16 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
 const sheetVariants = cva(
-  "tw-fixed tw-z-[99999999] tw-gap-4 tw-bg-background tw-p-6 tw-shadow-lg tw-transition tw-ease-in-out data-[state=closed]:tw-duration-300 data-[state=open]:tw-duration-500 data-[state=open]:tw-animate-in data-[state=closed]:tw-animate-out",
+  "twe-fixed twe-z-[99999999] twe-gap-4 twe-bg-background twe-p-6 twe-shadow-lg twe-transition twe-ease-in-out data-[state=closed]:twe-duration-300 data-[state=open]:twe-duration-300 data-[state=open]:twe-animate-in data-[state=closed]:twe-animate-out",
   {
     variants: {
       side: {
-        top: "tw-inset-x-0 tw-top-0 tw-border-b data-[state=closed]:tw-slide-out-to-top data-[state=open]:tw-slide-in-from-top",
+        top: "twe-inset-x-0 twe-top-0 twe-border-b data-[state=closed]:twe-slide-out-to-top data-[state=open]:twe-slide-in-from-top",
         bottom:
-          "tw-inset-x-0 tw-bottom-0 tw-border-t data-[state=closed]:tw-slide-out-to-bottom data-[state=open]:tw-slide-in-from-bottom",
-        left: "tw-inset-y-0 tw-left-0 tw-h-full tw-w-3/4 tw-border-r data-[state=closed]:tw-slide-out-to-left data-[state=open]:tw-slide-in-from-left sm:tw-max-w-sm",
+          "twe-inset-x-0 twe-bottom-0 twe-border-t data-[state=closed]:twe-slide-out-to-bottom data-[state=open]:twe-slide-in-from-bottom",
+        left: "twe-inset-y-0 twe-left-0 twe-h-full twe-w-3/4 twe-border-r data-[state=closed]:twe-slide-out-to-left data-[state=open]:twe-slide-in-from-left sm:twe-max-w-sm",
         right:
-          "tw-inset-y-0 tw-right-0 tw-h-full tw-w-3/4 tw-border-l tw-border-l-[#333] data-[state=closed]:tw-slide-out-to-right data-[state=open]:tw-slide-in-from-right sm:tw-max-w-sm",
+          "twe-inset-y-0 twe-right-0 twe-h-full twe-w-3/4 twe-border-l twe-border-l-[#333] data-[state=closed]:twe-slide-out-to-right data-[state=open]:twe-slide-in-from-right sm:twe-max-w-sm",
       },
     },
     defaultVariants: {
@@ -62,9 +62,9 @@ const SheetContent = React.forwardRef<
       className={cn(sheetVariants({ side }), className)}
       {...props}
     >
-      <SheetPrimitive.Close className="tw-absolute tw-right-4 tw-top-4 tw-rounded-sm tw-opacity-70 tw-ring-offset-background tw-transition-opacity hover:tw-opacity-100 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-ring focus:tw-ring-offset-2 disabled:tw-pointer-events-none data-[state=open]:tw-bg-secondary">
-        <X className="tw-h-4 tw-w-4" />
-        <span className="tw-sr-only">Close</span>
+      <SheetPrimitive.Close className="twe-absolute twe-right-4 twe-top-4 twe-rounded-sm twe-opacity-70 twe-ring-offset-background twe-transition-opacity hover:twe-opacity-100 focus:twe-outline-none focus:twe-ring-2 focus:twe-ring-ring focus:twe-ring-offset-2 disabled:twe-pointer-events-none data-[state=open]:twe-bg-secondary">
+        <X className="twe-h-4 twe-w-4" />
+        <span className="twe-sr-only">Close</span>
       </SheetPrimitive.Close>
       {children}
     </SheetPrimitive.Content>
@@ -78,7 +78,7 @@ const SheetHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "tw-flex tw-flex-col tw-space-y-2 tw-text-center sm:tw-text-left",
+      "twe-flex twe-flex-col twe-space-y-2 twe-text-center sm:twe-text-left",
       className
     )}
     {...props}
@@ -92,7 +92,7 @@ const SheetFooter = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "tw-flex tw-flex-col-reverse sm:tw-flex-row sm:tw-justify-end sm:tw-space-x-2",
+      "twe-flex twe-flex-col-reverse sm:twe-flex-row sm:twe-justify-end sm:twe-space-x-2",
       className
     )}
     {...props}
@@ -106,7 +106,7 @@ const SheetTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Title
     ref={ref}
-    className={cn("tw-text-lg tw-font-semibold tw-text-foreground", className)}
+    className={cn("twe-text-lg twe-font-semibold twe-text-foreground", className)}
     {...props}
   />
 ))
@@ -118,7 +118,7 @@ const SheetDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Description
     ref={ref}
-    className={cn("tw-text-sm tw-text-muted-foreground", className)}
+    className={cn("twe-text-sm twe-text-muted-foreground", className)}
     {...props}
   />
 ))

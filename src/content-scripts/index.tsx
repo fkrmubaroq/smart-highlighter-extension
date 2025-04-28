@@ -1,49 +1,66 @@
 import BtnBookmark from "@/components/button/btn-bookmark";
 import SheetHighlightedWords from "@/components/sheet-highlighted-words";
-import { useModal } from "@/libs/hooks";
-import { removeComponent } from "@/libs/utils/remove";
+import { useShow } from "@/libs/hooks";
 import { renderComponent } from "@/libs/utils/render";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
+import { Toaster } from 'react-hot-toast';
 import "../styles/main.css";
 
 const tolerance = 25;
-const Component = ({ coordinate, highlightedText }: { coordinate: { x: number; y: number; }; highlightedText: string; }) => {
-    const { show, hideModal, modalName, showModal, data: dataModal } = useModal<"sheet-highlighted-words", string>();
-
-    console.log("show", show, modalName)
-    return <>
-        {show && <>
-            {modalName === "sheet-highlighted-words" && <SheetHighlightedWords show onHide={hideModal}/>}
-        </>
+const Component = () => {
+    const { isShow, hideDisplay, displayName, showDisplay, data: dataShow } = useShow<"sheet-highlighted-words" | "btn-bookmark", string>();
+    const [selectedText, setSelectedText] = useState("");
+    const btnRef = useRef<HTMLDivElement>(null);
+    const listener = useCallback((e: any) => {
+        const selection = window.getSelection();
+        const selectedText = selection.toString().replaceAll(/\s+/g, " ");
+        if (displayName === "sheet-highlighted-words") return
+        if (!selectedText.length) {
+            hideDisplay();
+            return;
         }
-        <BtnBookmark
-            onClick={() => {
-                showModal("sheet-highlighted-words", highlightedText)
-            
-            }}
-            style={{
-                left: `${coordinate.x}px`,
-                top: `${coordinate.y - tolerance}px`,
-            }} />
+
+        const coordinate = {
+            x: e.pageX,
+            y: e.pageY - 10
+        }
+        flushSync(() => {
+            showDisplay("btn-bookmark");
+            setSelectedText(selectedText);
+        })
+        btnRef.current.style.left = `${coordinate.x}px`;
+        btnRef.current.style.top = `${coordinate.y - tolerance}px`;
+    }, [displayName])
+
+    useEffect(() => {
+        document.addEventListener('mouseup', listener)
+
+        return () => {
+            document.removeEventListener('mouseup', listener)
+        }
+    }, [displayName])
+
+    console.log("display", displayName)
+
+    return <>
+        <Toaster containerStyle={{ zIndex: "99999999999999" }} position="bottom-right" />
+        <SheetHighlightedWords selectedText={selectedText} show={displayName === "sheet-highlighted-words"} onHide={hideDisplay} />
+        {isShow &&
+            <>
+                {displayName === "btn-bookmark" &&
+                    <BtnBookmark
+                        ref={btnRef}
+                        onClick={() => {
+                            showDisplay("sheet-highlighted-words")
+                        }}
+                    />
+                }
+            </>
+        }
+
     </>
 }
 
-document.addEventListener('mouseup', (e) => {
-    const selection = window.getSelection();
-    const range = selection.getRangeAt(0);
-    const selectedText = selection.toString().replaceAll(/\s+/g, " ");
-    const isContainAppSelector = (e.target as HTMLElement).closest(`#${process.env.APP_SELECTOR}`);
-    console.log("x", isContainAppSelector)
-    if(isContainAppSelector) return;
-    if (!selectedText.length) {
-        removeComponent(`#${process.env.APP_SELECTOR}`)
-        return;
-    }
-    
-    const rect = range.getBoundingClientRect();
-    const coordinate = {
-        x: rect.left,
-        y: rect.top
-    }
-    console.log("e ", e , rect)
-    renderComponent(<Component coordinate={coordinate} highlightedText={selectedText} />, process.env.APP_SELECTOR)
-})
+
+renderComponent(<Component />, process.env.APP_SELECTOR)

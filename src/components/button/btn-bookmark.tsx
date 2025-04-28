@@ -1,12 +1,16 @@
+import React from "react";
+
 const logoUrl = chrome.runtime.getURL('assets/logo/save-word.png');
 
-export default function BtnBookmark(props: React.ComponentPropsWithoutRef<"div">) {
+const BtnBookmark = React.forwardRef<HTMLDivElement, React.ComponentPropsWithRef<"div">>((props, ref) => {
     return <div
+        ref={ref}
         role="button"
-        className="!tw-absolute tw-p-0.5 hover:tw-bg-gray-200 tw-bg-white tw-rounded-md tw-cursor-pointer tw-shadow-md"
+        className="!twe-absolute twe-p-0.5 hover:twe-bg-gray-200 twe-bg-white twe-rounded-md twe-cursor-pointer twe-shadow-md"
         {...props}
     >
-        <img src={logoUrl} className="tw-object-contain tw-w-[18px] tw-h-[18px]" />
+        <img src={logoUrl} className="twe-object-contain twe-w-[18px] twe-h-[18px]" />
     </div>
-}
+})
 
+export default BtnBookmark;

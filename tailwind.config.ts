@@ -1,4 +1,4 @@
-
+import tailwindcssAnimate from "tailwindcss-animate"
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -6,7 +6,7 @@ export default {
     './src/components/**/*.tsx',
     './src/content-scripts/**/*.tsx',
   ],
-  prefix:"tw-",
+  prefix:"twe-",
   darkMode:[`[data-ext-theme="dark"]`],
   theme: {
   	extend: {
@@ -59,5 +59,7 @@ export default {
   		}
   	}
   },
-  plugins: []
+  plugins: [
+	tailwindcssAnimate
+  ]
 }

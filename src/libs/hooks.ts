@@ -14,36 +14,36 @@ export function useGetCurrentTab() {
   return tabId;
 }
 
-type TuseModal<TModalName> = {
+type TuseShow<TDisplayName> = {
   show?: boolean;
-  modalName?: TModalName;
+  displayName?: TDisplayName;
 };
 
-export function useModal<TModalName, TData = unknown>(initialOptions?: TuseModal<TModalName>) {
+export function useShow<TDisplayName, TData = unknown>(initialOptions?: TuseShow<TDisplayName>) {
   const [currentShow, setCurrentShow] = useState(initialOptions?.show || false);
-  const [name, setName] = useState<TModalName | undefined>(
-    initialOptions?.modalName || undefined
+  const [name, setName] = useState<TDisplayName | undefined>(
+    initialOptions?.displayName || undefined
   );
   const [data, setData] = useState<TData | null>(null);
 
-  const hideModal = () => {
+  const hideDisplay = () => {
     setCurrentShow(false);
     setName(undefined);
     // Remove modal-open class from body
-    document.body.classList?.remove("modal-open");
+    // document.body.classList?.remove("modal-open");
   };
 
-  const showModal = (modalName: TModalName, data?: TData) => {
-    setName(modalName);
+  const showDisplay = (displayName: TDisplayName, data?: TData) => {
+    setName(displayName);
     setCurrentShow(true);
     data && setData(data);
   };
 
   return {
     data,
-    modalName: name,
-    showModal,
-    show: currentShow,
-    hideModal,
+    displayName: name,
+    showDisplay,
+    isShow: currentShow,
+    hideDisplay,
   };
 }

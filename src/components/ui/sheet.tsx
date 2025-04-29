@@ -3,6 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { X } from "lucide-react"
 import * as React from "react"
 
+import { usePortalContainer } from "@/libs/contexts/portal-context"
 import cn from "clsx"
 
 const Sheet = SheetPrimitive.Root
@@ -49,27 +50,30 @@ const sheetVariants = cva(
 
 interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
-    VariantProps<typeof sheetVariants> {}
+  VariantProps<typeof sheetVariants> { }
 
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
->(({ side = "right", className, children, ...props }, ref) => (
-  <SheetPortal>
-    <SheetOverlay />
-    <SheetPrimitive.Content
-      ref={ref}
-      className={cn(sheetVariants({ side }), className)}
-      {...props}
-    >
-      <SheetPrimitive.Close className="twe-absolute twe-right-4 twe-top-4 twe-rounded-sm twe-opacity-70 twe-ring-offset-background twe-transition-opacity hover:twe-opacity-100 focus:twe-outline-none focus:twe-ring-2 focus:twe-ring-ring focus:twe-ring-offset-2 disabled:twe-pointer-events-none data-[state=open]:twe-bg-secondary">
-        <X className="twe-h-4 twe-w-4" />
-        <span className="twe-sr-only">Close</span>
-      </SheetPrimitive.Close>
-      {children}
-    </SheetPrimitive.Content>
-  </SheetPortal>
-))
+>(({ side = "right", className, children, ...props }, ref) => {
+  const portalContainer = usePortalContainer();
+  return (
+    <SheetPortal container={portalContainer}>
+      <SheetOverlay />
+      <SheetPrimitive.Content
+        ref={ref}
+        className={cn(sheetVariants({ side }), className)}
+        {...props}
+      >
+        <SheetPrimitive.Close className="twe-absolute twe-right-4 twe-top-4 twe-rounded-sm twe-opacity-70 twe-ring-offset-background twe-transition-opacity hover:twe-opacity-100 focus:twe-outline-none focus:twe-ring-2 focus:twe-ring-ring focus:twe-ring-offset-2 disabled:twe-pointer-events-none data-[state=open]:twe-bg-secondary">
+          <X className="twe-h-4 twe-w-4" />
+          <span className="twe-sr-only">Close</span>
+        </SheetPrimitive.Close>
+        {children}
+      </SheetPrimitive.Content>
+    </SheetPortal>
+  )
+})
 SheetContent.displayName = SheetPrimitive.Content.displayName
 
 const SheetHeader = ({

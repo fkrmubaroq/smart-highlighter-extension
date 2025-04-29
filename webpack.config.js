@@ -5,6 +5,8 @@ import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import WebExtPlugin from 'web-ext-plugin';
 import webpack from "webpack";
 import packageJson from "./package.json" with { type: "json" };
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 
 export default (env, argv) => {
   const mode = argv.mode;
@@ -31,6 +33,9 @@ export default (env, argv) => {
       clean: true,
     },
     plugins: [
+      new MiniCssExtractPlugin({
+        filename:"styles.css"
+      }),
       new webpack.DefinePlugin({
         'process.env.APP_SELECTOR': JSON.stringify(APP_SELECTOR),
         // TODO: use 'process.env.BROWSER' environment when different browser
@@ -105,10 +110,15 @@ export default (env, argv) => {
         {
           test: /\.css$/i,
           include: [
-            path.resolve('src/styles'),
             path.resolve('node_modules'),
+            path.resolve('src/styles'),
           ],
-          use: ['style-loader', 'css-loader', 'postcss-loader'],
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            'postcss-loader',
+          ],
+
         },
       ],
     },
@@ -118,5 +128,11 @@ export default (env, argv) => {
         new TsconfigPathsPlugin()
       ]
     },
+    optimization:{
+      minimizer:[
+        "...",
+        new CssMinimizerPlugin()
+      ]
+    }
   }
 }

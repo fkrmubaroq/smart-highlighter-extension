@@ -28,7 +28,7 @@ export default function SheetHighlightedWords({ selectedText, show, onHide }: { 
 
 function HighlightedText({ text }: { text: string }) {
   const [editable, setEditable] = useState(false);
-  const [currentText, setCurrentText] = useState(text);
+  const [currentText, setCurrentText]= useState(text);
   const [description, setDescription] = useState("");
   const onClose = () => setEditable(false);
 
@@ -56,23 +56,7 @@ function HighlightedText({ text }: { text: string }) {
         }}>
           <PencilIcon size={12} />
         </div>
-        {editable && <>
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={() => onClose()}
-          >
-            <XIcon size={12} />
-          </Button>
-          <Button
-            size="sm"
-            onClick={() => onSave(currentText)}
-          >
-            <CheckIcon size={12} />
-          </Button>
-        </>}
       </div>
-
     </div>
 
     <div>
@@ -99,5 +83,22 @@ function EditableText({ text, onClose, onSave }: {
 }) {
   const [currentText, setCurrentText] = useState(text);
   console.log("text", text, currentText)
-  return <Textarea value={currentText} className="twe-resize-none focus:!twe-ring-transparent twe-text-gray-100 twe-bg-transparent twe-pb-8 twe-h-[100px] twe-border-none" onChange={e => setCurrentText(e.target.value)} />
+  return <div className="relative w-full">
+    <Textarea value={currentText} className="twe-resize-none focus:!twe-ring-transparent twe-text-gray-100 twe-bg-transparent twe-pb-8 twe-h-[150px] twe-border-none" onChange={e => setCurrentText(e.target.value)} />
+    <div className="twe-absolute twe-bottom-[8px] twe-right-[7px]">
+      <Button
+        size="sm"
+        variant="ghost"
+        onClick={() => onClose()}
+      >
+        <XIcon size={12} />
+      </Button>
+      <Button
+        size="sm"
+        onClick={() => onSave(currentText)}
+      >
+        <CheckIcon size={12} />
+      </Button>
+    </div>
+  </div>
 }

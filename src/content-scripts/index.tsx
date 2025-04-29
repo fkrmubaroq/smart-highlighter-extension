@@ -1,66 +1,57 @@
-import BtnBookmark from "@/components/button/btn-bookmark";
-import SheetHighlightedWords from "@/components/sheet-highlighted-words";
-import { useShow } from "@/libs/hooks";
-import { renderComponent } from "@/libs/utils/render";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { flushSync } from "react-dom";
-import { Toaster } from 'react-hot-toast';
-import "../styles/main.css";
+import { PortalProvider } from "@/libs/contexts/portal-context";
+import { createRoot } from "react-dom/client";
+import { HighlightWords } from "./highlight-words";
 
-const tolerance = 25;
-const Component = () => {
-    const { isShow, hideDisplay, displayName, showDisplay, data: dataShow } = useShow<"sheet-highlighted-words" | "btn-bookmark", string>();
-    const [selectedText, setSelectedText] = useState("");
-    const btnRef = useRef<HTMLDivElement>(null);
-    const listener = useCallback((e: any) => {
-        const selection = window.getSelection();
-        const selectedText = selection.toString().replaceAll(/\s+/g, " ");
-        if (displayName === "sheet-highlighted-words") return
-        if (!selectedText.length) {
-            hideDisplay();
-            return;
-        }
 
-        const coordinate = {
-            x: e.pageX,
-            y: e.pageY - 10
-        }
-        flushSync(() => {
-            showDisplay("btn-bookmark");
-            setSelectedText(selectedText);
-        })
-        btnRef.current.style.left = `${coordinate.x}px`;
-        btnRef.current.style.top = `${coordinate.y - tolerance}px`;
-    }, [displayName])
+class SmartHighlighter extends HTMLElement {
+    stylesUrl: string = chrome.runtime.getURL('styles.css');
+    shadowRoot: ShadowRoot;
 
-    useEffect(() => {
-        document.addEventListener('mouseup', listener)
+    constructor() {
+        super();
+        this.shadowRoot = this.attachShadow({ mode: "open" });
+        const root = createRoot(this.shadowRoot);
+        const portalContainer = this.registerPortalContainer();
+        this.appendStyling();
+        root.render(<PortalProvider container={portalContainer}>
+            <HighlightWords />
+        </PortalProvider>)
+    }
 
-        return () => {
-            document.removeEventListener('mouseup', listener)
-        }
-    }, [displayName])
+    registerPortalContainer() {
+        const portalContainer = document.createElement("div");
+        portalContainer.id = "portal-container"
+        this.shadowRoot.appendChild(portalContainer);
+        return portalContainer;
+    }
 
-    console.log("display", displayName)
+    appendStyling() {
+        return fetch(this.stylesUrl).then(response => response.text())
+            .then(cssText => {
+                console.log("ress : ", cssText);
+                const styleEl = document.createElement("style");
+                styleEl.textContent = cssText
+                this.shadowRoot.prepend(styleEl);
+            })
 
-    return <>
-        <Toaster containerStyle={{ zIndex: "99999999999999" }} position="bottom-right" />
-        <SheetHighlightedWords selectedText={selectedText} show={displayName === "sheet-highlighted-words"} onHide={hideDisplay} />
-        {isShow &&
-            <>
-                {displayName === "btn-bookmark" &&
-                    <BtnBookmark
-                        ref={btnRef}
-                        onClick={() => {
-                            showDisplay("sheet-highlighted-words")
-                        }}
-                    />
-                }
-            </>
-        }
-
-    </>
+    }
 }
 
+console.log("masuk", customElements, window.customElements)
+document.addEventListener("DOMContentLoaded", () => {
 
-renderComponent(<Component />, process.env.APP_SELECTOR)
+});
+
+window.postMessage("INIT_APP", "*")
+window.addEventListener("message", (event) => {
+
+    if (event.source !== window) return;
+    if (event.data === "INIT_APP") {
+        console.log("window z :", window.customElements)
+        customElements.define("smart-highlighter", SmartHighlighter);
+        const element = document.createElement("smart-highlighter");
+        document.body.appendChild(element);
+    }
+})
+// const script = document.createElement("scipt");
+// script.src = chrome.runtime

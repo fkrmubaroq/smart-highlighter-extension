@@ -33,7 +33,7 @@ const DialogContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 >(({ className, children, ...props }, ref) => {
     const portalContainer = usePortalContainer();
-  
+    console.log("portalContainer ",portalContainer)
   return (
     <DialogPortal container={portalContainer}>
       <DialogOverlay />

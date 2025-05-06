@@ -35,6 +35,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      dom-highlight-range:
+        specifier: ^3.0.1
+        version: 3.0.1
       lucide-react:
         specifier: ^0.488.0
         version: 0.488.0(react@19.1.0)
@@ -72,6 +75,9 @@ importers:
       '@types/chrome':
         specifier: ^0.0.315
         version: 0.0.315
+      '@types/highlight-words-core':
+        specifier: ^1.2.3
+        version: 1.2.3
       '@types/node':
         specifier: ^22.14.1
         version: 22.14.1
@@ -1626,6 +1632,9 @@ packages:
   '@types/har-format@1.2.16':
     resolution: {integrity: sha512-fluxdy7ryD3MV6h8pTfTYpy/xQzCFC7m89nOH9y94cNqJ1mDIDPut7MnRHI3F6qRmh/cT2fUjG1MLdCNb4hE9A==}
 
+  '@types/highlight-words-core@1.2.3':
+    resolution: {integrity: sha512-PWNU/NR0CaYEsK38mcCTyDzeS2TlEGK9kRhRMz1i86jVAe836ZlA3gl6QYpu+CG6IpfNKTgWpEnJuRededvC0g==}
+
   '@types/istanbul-lib-coverage@2.0.6':
     resolution: {integrity: sha512-2QF/t/auWm0lsy8XtKVPG19v3sSOQlJe/YHZgfjb/KBBHOGSV+J2q/S671rcq9uTBrLAXmZpqJiaQbMT+zNU1w==}
 
@@ -2309,6 +2318,9 @@ packages:
   doctrine@3.0.0:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
     engines: {node: '>=6.0.0'}
+
+  dom-highlight-range@3.0.1:
+    resolution: {integrity: sha512-RLQuKlyrM5urZma8CZV/UvmQWPS+7eAzI36aE/bpg5lW7klaQRgYZ5S1Tyr/FaTEOye2SHFild3XV7gQnpljZA==}
 
   dom-serializer@2.0.0:
     resolution: {integrity: sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==}
@@ -5951,6 +5963,8 @@ snapshots:
 
   '@types/har-format@1.2.16': {}
 
+  '@types/highlight-words-core@1.2.3': {}
+
   '@types/istanbul-lib-coverage@2.0.6': {}
 
   '@types/istanbul-lib-report@3.0.3':
@@ -6664,6 +6678,8 @@ snapshots:
   doctrine@3.0.0:
     dependencies:
       esutils: 2.0.3
+
+  dom-highlight-range@3.0.1: {}
 
   dom-serializer@2.0.0:
     dependencies:

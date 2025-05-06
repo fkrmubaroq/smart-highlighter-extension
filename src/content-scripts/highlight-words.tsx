@@ -7,7 +7,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { Toaster } from 'react-hot-toast';
 
-
 const tolerance = 25;
 export const HighlightWords = () => {
     const { isShow, hideDisplay, displayName, showDisplay, data: dataShow } = useShow<"sheet-highlighted-words" | "btn-bookmark", string>();
@@ -70,3 +69,5 @@ export const HighlightWords = () => {
 
     </>
 }
+
+

@@ -41,10 +41,10 @@ const sheetVariants = cva(
         right:
           "twe-inset-y-0 twe-right-0 twe-h-full twe-w-3/4 twe-border-l twe-border-l-[#333] data-[state=closed]:twe-slide-out-to-right data-[state=open]:twe-slide-in-from-right sm:twe-max-w-sm",
       },
-    },
-    defaultVariants: {
-      side: "right",
-    },
+      defaultVariants: {
+        side: "right",
+      },
+    }
   }
 )
 
@@ -66,7 +66,7 @@ const SheetContent = React.forwardRef<
         {...props}
       >
         <SheetPrimitive.Close className="twe-absolute twe-right-4 twe-top-4 twe-rounded-sm twe-opacity-70 twe-ring-offset-background twe-transition-opacity hover:twe-opacity-100 focus:twe-outline-none focus:twe-ring-2 focus:twe-ring-ring focus:twe-ring-offset-2 disabled:twe-pointer-events-none data-[state=open]:twe-bg-secondary">
-          <X className="twe-h-4 twe-w-4" />
+          <X className="twe-h-4 twe-w-4" color="#333" />
           <span className="twe-sr-only">Close</span>
         </SheetPrimitive.Close>
         {children}

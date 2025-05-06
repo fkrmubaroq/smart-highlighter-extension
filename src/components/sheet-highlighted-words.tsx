@@ -15,7 +15,7 @@ import { Textarea } from "./ui/textarea";
 
 export default function SheetHighlightedWords({ selectedText, show, onHide }: { selectedText: string; show: boolean; onHide: () => void }) {
   return <Sheet open={show} onOpenChange={onHide}>
-    <SheetContent>
+    <SheetContent className="twe-mt-5 twe-mb-5 twe-mr-3 twe-max-h-[94vh] twe-rounded-md twe-w-[350px]">
       <SheetHeader>
         <SheetTitle>Highlighted Text</SheetTitle>
         <SheetDescription>
@@ -28,7 +28,7 @@ export default function SheetHighlightedWords({ selectedText, show, onHide }: { 
 
 function HighlightedText({ text }: { text: string }) {
   const [editable, setEditable] = useState(false);
-  const [currentText, setCurrentText]= useState(text);
+  const [currentText, setCurrentText] = useState(text);
   const [description, setDescription] = useState("");
   const onClose = () => setEditable(false);
 
@@ -51,7 +51,7 @@ function HighlightedText({ text }: { text: string }) {
             /> :
             <em className="twe-break-all twe-not-italic twe-p-[3px] twe-rounded-sm twe-bg-primary twe-text-white">{currentText}</em>
         }
-        <div className={clsx("twe-absolute twe-right-3 twe-top-1/2 cursor-pointer", !editable && "-translate-y-1/2")} onClick={() => {
+        <div className={clsx("twe-absolute twe-right-3 twe-top-1/2 twe-cursor-pointer", !editable && "-translate-y-1/2")} onClick={() => {
           setEditable(true)
         }}>
           <PencilIcon size={12} />
@@ -65,7 +65,6 @@ function HighlightedText({ text }: { text: string }) {
         placeholder="Description here"
         value={description}
         onChange={e => setDescription(e.target.value)}
-        className="twe-text-gray-100"
       />
     </div>
 
@@ -82,9 +81,9 @@ function EditableText({ text, onClose, onSave }: {
   onSave: (text: string) => void;
 }) {
   const [currentText, setCurrentText] = useState(text);
-  console.log("text", text, currentText)
-  return <div className="relative w-full">
-    <Textarea value={currentText} className="twe-resize-none focus:!twe-ring-transparent twe-text-gray-100 twe-bg-transparent twe-pb-8 twe-h-[150px] twe-border-none" onChange={e => setCurrentText(e.target.value)} />
+
+  return <div className="twe-relative twe-w-full">
+    <Textarea value={currentText} className="twe-resize-none focus:!twe-ring-transparent twe-bg-transparent twe-pb-8 twe-h-[150px] twe-border-none" onChange={e => setCurrentText(e.target.value)} />
     <div className="twe-absolute twe-bottom-[8px] twe-right-[7px]">
       <Button
         size="sm"
